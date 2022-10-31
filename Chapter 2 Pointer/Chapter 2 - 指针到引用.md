@@ -1,7 +1,6 @@
 ## Chapter 2 从指针到引用
 
 - int x= 10; 10有类型，x也有类型
-
 - 类型表述了4种信息：
   - 存储所需的空间大小；sizeof(x)
   - 取值空间；超过限制可能溢出，例如赋值上界+1，则变为最小值；std::numeric_limits
@@ -10,4 +9,10 @@
 - int包含4个字符（byte），一个字符8比特（bit）
 - 类型描述：
   - 基本类型：C++语言中所支持的类型
+    - 字符类型（char, wchar_t, char16_t,char32_t）
+    - 整数类型
+      - 带符号整数：short, int, long, long long
+      - 无符号整数：unsigned  + 带符号整数类型
+      - 浮点类型：float, double, long double
+    - viod
   - 复杂类型：由基本类型组合、变种所产生的类型，可能是标准库引入，或自定义类型
