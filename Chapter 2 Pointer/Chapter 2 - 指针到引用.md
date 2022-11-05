@@ -153,11 +153,20 @@
 
 - 常量表达式（从C++11开始）
 
-  - 
+  - 编译期常量使用constexpr声明`constexpr int y = 3`
+  - 编译器可以利用其进行优化
+  - 常量表达式指针：constexpr位于*左侧，但表示指针是常量表达式`constexpr const int* ptr = nullptr;`
 
+### 类型别名与类型的自动推导
 
-
-
+- 可为类型引入别名，从而引入特殊的含义或便于使用
+- 两种引入类型别名方式：
+  - `typedef int MyInt;`
+  - `using MyInt = int;`（从c++11开始）
+- 使用using引入类型别名更友好
+  - typedef char MyCharArr[4];
+  - using MyCharArr = char[4];
+- 
 
 
 
