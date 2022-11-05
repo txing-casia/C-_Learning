@@ -112,7 +112,60 @@
 - 指针的引用
 
   - 指针是对象，因此可以定义引用
-  - int* p=&val; int* & ref=p;
+  - `int* p=&val; int* & ref=p;`
   - 类型信息从右向左解析
 
+- 常量不可修改，防止非法操作，优化程序逻辑
+
+- ```c++
+  const 出现在*右边：指针本身不能改变
+  const 出现在*左边：指针指向的值不能改变
   
+  int* const ptr = &x;//指针指向地址不可更改
+  // ptr = &y; 不可行
+  
+  const int* ptr = &x;//指针指向地址中的值不可更改
+  // *ptr = 3; 不可行
+  ```
+
+- 顶层常量和常量指针：
+
+  - ```c++
+    // const int* --x--> int*
+    const int x = 3;
+    int* ptr = &x;//报错
+    
+    // int* ----> const int*
+    int x = 3;
+    const int* ptr = &x;//正确
+    
+    // const int* ----> const int*
+    const int x = 3;
+    const int* ptr = &x;//正确
+    ```
+
+- 常量引用：
+
+  - const int&
+  - 可读不可写
+  - 主要用于函数形参
+  - 可以绑定字面值
+
+- 常量表达式（从C++11开始）
+
+  - 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
