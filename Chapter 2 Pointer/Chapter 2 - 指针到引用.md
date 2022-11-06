@@ -160,21 +160,55 @@
 ### 类型别名与类型的自动推导
 
 - 可为类型引入别名，从而引入特殊的含义或便于使用
+
 - 两种引入类型别名方式：
   - `typedef int MyInt;`
   - `using MyInt = int;`（从c++11开始）
+  
 - 使用using引入类型别名更友好
   - typedef char MyCharArr[4];
   - using MyCharArr = char[4];
+  
 - 类型别名与指针、引用的关系
+
   - 应将指针类型别名视为一个整体，在此基础上引入常量表示指针为常量的类型
   - 不能通过类型别名构造引用的引用
+
 - 类型的自动推导
+
   - auto关键字可以根据赋值类型自动推导变量类型
+
   - auto会发生类型退化
-  - 
 
+  - const auto/constexpr auto 推导出的是常量/常量表达式类型
 
+  - auto& 推导出引用类型，避免类型退化
+
+  - decltype(exp) 返回exp表达式的类型（左值加引用）
+
+    - ```C++
+      int x = 3;
+      int* ptr = &x;
+      //decltype(*ptr)的类型为 int&
+      ```
+
+    - ```C++
+      int x = 3;
+      int* ptr = &x;
+      
+      decltype(x) --> int // x为变量名，推导出变量类型
+      decltype(*ptr) --> int& // *ptr不是变量名，推导出类型的引用
+      ```
+
+      
+
+  - decltype(val) 返回val的类型，不会产生退化
+
+  - auto&虽然也不退化，但会产生引用，decltype(val) 不退化，不加引用，更方便；
+
+  - decltype(auto) C++14开始使用， 
+
+ 
 
 
 
