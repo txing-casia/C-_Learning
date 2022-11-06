@@ -198,6 +198,11 @@
       
       decltype(x) --> int // x为变量名，推导出变量类型
       decltype(*ptr) --> int& // *ptr不是变量名，推导出类型的引用
+      
+      decltype(3.5) --> double //3.5是右值
+      decltype(*ptr) --> int& //*ptr是左值
+      decltype(ptr) --> int* //ptr是变量名称
+      //右值返回原类型，左值返回类型加引用
       ```
 
       
@@ -206,7 +211,22 @@
 
   - auto&虽然也不退化，但会产生引用，decltype(val) 不退化，不加引用，更方便；
 
-  - decltype(auto) C++14开始使用， 
+  - **decltype(exp)，如果exp是表达式，左值加引用；如果是名称（val）返回val类型；**
+
+  - decltype(auto) C++14开始使用，不退化，于decltype(auto) x = 3.5+15l 等效于decltype(3.5 + 15l) x = 3.5+15l 
+
+  - concept auto C++20开始支持，表示一系列类型，可以限制推导的过程
+
+  - ```C++
+    std::integral auto y = 3.5;//语句无法执行，因为整数相关的类型都无法表示3.5
+    std::integral auto y = 3.5;//正确
+    ```
+
+    
+
+  - 
+
+  
 
  
 
