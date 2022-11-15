@@ -84,26 +84,55 @@
   - 解引用 (*ptr, ptr[2])
   - 指针索引
 
+-  求元素的个数：
+
+  - `sizeof`方法，`sizeof(a)/sizeof(int)`//求数组长度
+  - `std::size`方法
+  - `(c)end-(c)begin`方法
+
+- 元素遍历
+  
+  - 基于元素个数
+  
+  - 基于(c)begin/(c)end
+  
+  - 基于range-based for 循环
+  
+    - ```c++
+      int a[4] = {2,3,5,7};
+      for (int x : a)
+      {
+      	std::cout << x << std::endl;
+      }
+      ```
+  
 - 
-
   
-
+- 
   
-
+- 
   
-
+- 
   
-
   
-
   
-
   
-
   
-
   
-
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
 
  
