@@ -106,7 +106,19 @@
       }
       ```
   
-- 
+- 字符数组长度计算：
+  
+  - ```C++
+    #include <cstring>
+    char str[] = "Hello";
+    cout << strlen(str) << endl; //strlen() = 5
+    char str[] = {'H','e','l','l','o'};
+    cout << strlen(str) << endl; //strlen() 不一定为 5
+    char str[] = {'H','e','l','l','o','\0'};
+    cout << strlen(str) << endl; //strlen() = 5
+    ```
+  
+  - 
   
 - 
   
