@@ -142,13 +142,59 @@ for (auto & p : x2){
   - 使用类型别名来简化多维数组指针的声明
   - 使用指针来遍历多维数组
 
+### vector
+
+- `include <vector>`
+- `std::vector<int> x;`
+
+- 与内建数组比，更侧重与易用性
+  - 可复制、在运行期动态改变元素个数
+
+- 构造与初始化
+
+  - 聚合初始化
+  - 其它初始化方式
+
+- 其它方法
+
+  - 获取元素个数，判断是否为空
+  - 插入、删除元素
+  - vector的比较
+
+
+- `std:vector<int> x(3); // x中包含三个为0的int`
+
+- `std:vector<int> x(3,1); // x中包含三个为1的int`
+
+- `std::cout<<x.size(); // 元素个数`
+
+- `std::cout<<x.empty(); // 元素是否为空`
+
+- `x.push_back(2); // vector末尾添加元素2`
+
+- `x.pop_back(); // 去除最后一个元素`
+
+- ```c++
+  std::vector<int> x1 = {1,2,3};
+  std::vector<int> x2 = {1,3,2};
+  std::cout<< (x1 == x2); //逐个比较每个元素的大小，返回一个bool值
+  std::cout<< (x1 > x2); //逐个比较每个元素的大小，返回一个bool值
+  ```
+  
+- vector元素的索引和遍历：
+
+  - [] 和 at
+  - (c)begin/(c)end函数 和 (c)begin/(c)end方法
+  
 - 
 
 - 
 
 - 
 
-  
+- 
+
+- 
 
   
 
@@ -168,8 +214,11 @@ for (auto & p : x2){
 
   
 
+  
+  
+  
 
- 
+
 
 
 
