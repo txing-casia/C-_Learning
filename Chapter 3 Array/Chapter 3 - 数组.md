@@ -184,17 +184,85 @@ for (auto & p : x2){
 - vector元素的索引和遍历：
 
   - [] 和 at
+  - `x.at(20) // 如果20越界了，会报错，更安全，使用[]不会报错，会输出随机值`
   - (c)begin/(c)end函数 和 (c)begin/(c)end方法
+
+- 迭代器（x.end()返回类型）
+
+  - 模拟指针的行为
+- 包含多种类别，每种支持的操作不同
+  - vector对应随机访问迭代器
+  - 解引用与下标访问
+    - 移动
+  - 两个迭代器详见求距离
+    - 两个迭代器比较
+
+- vector迭代器其它内容
+
+  - 添加元素可能导致之前的迭代器失效
+  - 多维vector
+    - `std::vector<std::vector<int>> x // 二维vector`
+    - 聚合初始化`std::vector<std::vector<int>> x{{1,2,3},{4,5}}; // 维度长度可以不相等`
   
+  - 从`.`到 `->` 操作符
+  
+    ```C++
+    std::vctor<int> x;
+    std::cout<< x.size();
+    
+    std::vctor<int>* ptr = &x;
+    std::cout<< (*ptr).size(); // 指针解引用后，使用 . 调用方法
+    std::cout<< ptr->size(); // 指针使用 -> 调用对象方法
+    ```
+
+    
+
+  - vector内部定义的类型
+  
+    - size_type
+    - iterator / const_iterator
+
+### string
+
+- ```C++
+  #include <string>
+  std::string x = "Hello";
+  std::string y = x;
+  x = x + " !";
+  ```
+
 - 
 
-- 
 
-- 
+- 与内建字符串相比，更侧重易用性
 
-- 
+  - 可复制、可在运行期动态改变字符个数
 
-- 
+- 构造与初始化
+
+```C++
+std::string x(3,'a'); // 3个字符，每个字符是'a'
+std::string y(x); // 等价于y=x
+```
+
+
+- 其它方法
+
+  - 尺寸相关方法（size/empty）
+
+  - 比较
+
+  - 赋值  `y = "hello string"; // 赋值方式`
+
+  - 拼接 `y = y + x; // string可以这样操作，内建字符串则不能用+拼接`
+
+    `y = x + "Hello" // 可以`
+
+    `y = "Hello" + "string" + x // 不行` 
+
+  - 索引 `y[2] // 输出l`
+
+  - 转换为C字符串 `auto ptr = y.c_str(); // ptr是一个指针，其中内容是Hello`
 
   
 
@@ -204,18 +272,6 @@ for (auto & p : x2){
 
   
 
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
   
 
 
