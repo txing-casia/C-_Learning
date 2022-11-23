@@ -21,7 +21,7 @@
 
 - `xvalue`：（亡值）表示其资源可以被重新使用
 
-- 分类：
+- 分类方式：
 
   ```python
           expression
@@ -31,7 +31,13 @@
   lvalue    xvalue    prvalue 
   ```
 
-- s
+- C++中左值不一定能放在等号左边，右值可能放在等号左边；
+
+- 再论decltype
+
+  - prvalue -> type：若表达式值类别为纯右值，则decltype产生T
+  - lvalue -> type&：若表达式值类别为左值，则decltype产生T&
+  - xvalue -> type&&：若表达式的值类别为亡值，则decltype产生T&&
 
 
 
