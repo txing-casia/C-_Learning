@@ -20,7 +20,36 @@
 
 
 - `xvalue`：（亡值）表示其资源可以被重新使用
-- 
+
+- 分类：
+
+  ```python
+          expression
+            /   \
+     glvalue     rvalue
+       /   \      /   \
+  lvalue    xvalue    prvalue 
+  ```
+
+- s
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### 表达式详述
 
