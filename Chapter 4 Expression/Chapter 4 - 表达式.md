@@ -39,7 +39,18 @@
   - lvalue -> type&：若表达式值类别为左值，则decltype产生T&
   - xvalue -> type&&：若表达式的值类别为亡值，则decltype产生T&&
 
-
+- 类型转换
+  - 隐式转换：
+    - 自动发生
+    - 实际上是有限长度的转型序列
+    - implicit conversion
+  - 显式转换：
+    - static_cast
+    - const_cast
+    - dynamic_cast
+    - reinterpret_cast
+    - C形式的类型转换
+- 是
 
 
 
