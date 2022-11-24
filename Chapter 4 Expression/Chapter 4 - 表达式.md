@@ -40,17 +40,53 @@
   - xvalue -> type&&：若表达式的值类别为亡值，则decltype产生T&&
 
 - 类型转换
+
   - 隐式转换：
+
     - 自动发生
     - 实际上是有限长度的转型序列
     - implicit conversion
+
   - 显式转换：
+
+    - 显式引入的转换
+
     - static_cast
-    - const_cast
-    - dynamic_cast
-    - reinterpret_cast
+
+      - `static_cast<double>(3) + 0.5; // 把3转换为double `编译期执行
+
+    - const_cast 可以改变const类型对象
+
+    - dynamic_cast 运行期执行
+
+    - reinterpret_cast 强行重新解释对象存储空间，对象值可能改变（存储格式不同）
+
     - C形式的类型转换
-- 是
+
+      - ```C++
+        (double)3;
+        ```
+
+      - 自动以以下顺序尝试转换对象：`const_cast -> static_cast -> static_cast(带扩展)后随const_cast -> reinterpret_cast -> reinterpret_cast后随const_cast`
+
+### 算数操作符
+
+- 三个优先级
+  - +, - （一元，正负）
+  - *, /, %
+  - +, - （二元）
+- 均为左结合的，从左开始计算
+- 操作数和结果均为算数类型的右值，但加减法和正号可接收指针
+- 一元+操作符会产生integral promotion，例如short 转为int
+- 整数相除会产生整数，舍弃小数点后的部分
+- 求余 `%` 只能接收整数类型的操作数，**结果的符号与第一个操作数相同** 
+- 
+
+
+
+
+
+
 
 
 
