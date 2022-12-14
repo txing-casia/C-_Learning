@@ -1,9 +1,6 @@
 #include <iostream>
-#include <cstdlib>
 #include <math.h>
-#include <ctime>
-#include <iomanip>
-#include <chrono>
+#include <fstream>
 using namespace std;
 
 int N = 10; // question num
@@ -21,27 +18,26 @@ bool complex_flag = true;
 
 
 
-int main()
+void read_file()
 {
-    int correct = 0;
+    ifstream fin;
+	fin.open("InputFile.txt", ios::in);
+	if (!fin.is_open())
+	{
+		cout << "无法找到这个文件！" << endl;
+		return;
+	}
+	char buff[1024] = { 0 };
+	while (fin >> buff)
+	{
+		cout << buff <<endl;
+	}
+	fin.close();
+}
 
 
-    cout<<"Correct Answer Number: "<< correct <<endl;
-    cout<<"Wrong Answer Number: "<< N - correct <<endl;
-    cout<<"Your score is: "<< (correct*1.0/N)*100 <<endl;
-    cout<<"The average spend time per question: "<<evarage_time<<'s'<<endl;
-    cout<<"The minimal spend time for one question: "<<spend_time_min<<'s'<<endl;
+int main(void)
+{
 
-    // print the question answers with wrong user answers 
-    if (N - correct)
-    {
-        cout<<"Questions you give wrong answers: "<<endl;
-        for(int i=0;i<N;i++)
-        {
-            if (not correct_record[i])
-                cout<<question_paras[i][0]<<question_operaters[i]<<question_paras[i][1]<<'='<<question_answers[i]<<endl;
-        }
-    }
-    cout<<"--end--"<<endl;
 
 }
