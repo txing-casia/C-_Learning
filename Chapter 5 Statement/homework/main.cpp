@@ -48,19 +48,53 @@ std::vector<std::string> readLinesFromFile(const std::string &filePath)
 //     }
 // }
 
-std::string convertoutputbase(std::string res, int outputbase)
+
+std::string MCovertToN(int M, int N, std::string str)
 {
-	int i = res.length()-1; 
-	std::string ans="";
-	do {
-		temp += find_index(res[i]);
-		num = res[];
-		ans = numberbase[num % outputbase] + ans;
-		
-		num /= 26;
-	} while(num);
-	return ans;
+	int currentnum = 0;//当前位
+	int mod = 0;//余数
+	std::string shang = str;//商串
+	std::string result = "";//存放转换后的结果串
+	std::string temp_shang = "";//存放中间商串
+	while(shang.length() > 0)
+	{
+		temp_shang = "";
+		mod = 0;
+		for(int i = 0; i < shang.length(); i++)
+		{//该循环即从字符串的最高位开始做除法，具体参照整数除法的过程
+			currentnum = find_index(shang[i]);
+			if(currentnum == -1)
+				return "Error,invilade";
+			mod = mod * M + currentnum;
+			temp_shang += numberbase[mod / N];//存每一位上的商
+			mod = mod % N;
+		}
+		result = numberbase[mod] + result;//将余数放入结果；
+		int i = 0;
+		shang = temp_shang;
+		for(; i < shang.length(); i++)
+		{//去掉商前面的0
+			if(shang[i] != '0')
+				break;
+		}
+		shang = shang.substring(i);
+	}
+	return result;
 }
+
+// std::string convertoutputbase(std::string res, int outputbase)
+// {
+// 	int i = res.length()-1; 
+// 	std::string ans="";
+// 	do {
+// 		temp += find_index(res[i]);
+// 		num = res[];
+// 		ans = numberbase[num % outputbase] + ans;
+		
+// 		num /= 26;
+// 	} while(num);
+// 	return ans;
+// }
 
 
 int find_index(char N)
