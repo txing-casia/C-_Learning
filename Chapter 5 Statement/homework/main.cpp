@@ -49,38 +49,6 @@ std::vector<std::string> readLinesFromFile(const std::string &filePath)
 // }
 
 
-std::string MCovertToN(int M, int N, std::string str)
-{
-	int currentnum = 0;//当前位
-	int mod = 0;//余数
-	std::string shang = str;//商串
-	std::string result = "";//存放转换后的结果串
-	std::string temp_shang = "";//存放中间商串
-	while(shang.length() > 0)
-	{
-		temp_shang = "";
-		mod = 0;
-		for(int i = 0; i < shang.length(); i++)
-		{//该循环即从字符串的最高位开始做除法，具体参照整数除法的过程
-			currentnum = find_index(shang[i]);
-			if(currentnum == -1)
-				return "Error,invilade";
-			mod = mod * M + currentnum;
-			temp_shang += numberbase[mod / N];//存每一位上的商
-			mod = mod % N;
-		}
-		result = numberbase[mod] + result;//将余数放入结果；
-		int i = 0;
-		shang = temp_shang;
-		for(; i < shang.length(); i++)
-		{//去掉商前面的0
-			if(shang[i] != '0')
-				break;
-		}
-		shang = shang.substring(i);
-	}
-	return result;
-}
 
 // std::string convertoutputbase(std::string res, int outputbase)
 // {
@@ -103,10 +71,16 @@ int find_index(char N)
 	int i = 0;
 	while(i < numberbase.size())
 	{
-		if (numberbase[i] == N)
+		if (numberbase[i] == N // 输入是数字
+			|| (numberbase[i] == char(N + 32) && isalpha(char(N + 32)) && isalpha(N)) //输入是大写字母
+			|| (numberbase[i] == char(N - 32) && isalpha(char(N - 32)) && isalpha(N))) //输入是小写字母
+			// std::cout<<"numberbase[i]: "<<numberbase[i]<<std::endl;
+			// std::cout<<"char(N + 32): "<<char(N + 32)<<std::endl;
+			// std::cout<<"N: "<<N<<std::endl;
 			break;
 		// std::cout<<"numberbase[i]: "<<numberbase[i]<<std::endl;
 		// std::cout<<"N: "<<N<<std::endl;
+		// std::cout<<"N: "<<char(N-32)<<std::endl;
 		i++;
 	}
 	return i;
@@ -139,7 +113,40 @@ int find_bigger(std::vector<char> A, std::vector<char> B)
 
 }
 
-std::vector<char> addition(std::vector<char> A, std::vector<char> B, int inputBase)
+std::string covert_M2N(int M, int N, std::string str)
+{
+	int currentnum = 0;//当前位
+	int mod = 0;//余数
+	std::string quotient = str;//商串
+	std::string result = "";//存放转换后的结果串
+	std::string temp_quotient = "";//存放中间商串
+	while(quotient.length() > 0)
+	{
+		temp_quotient = "";
+		mod = 0;
+		for(int i = 0; i < quotient.length(); i++)//该循环即从字符串的最高位开始做除法，具体参照整数除法的过程
+		{
+			currentnum = find_index(quotient[i]);
+			if(currentnum == -1)
+				return "Error,invilade";
+			mod = mod * M + currentnum;
+			temp_quotient += numberbase[mod / N];//存每一位上的商
+			mod = mod % N;
+		}
+		result = numberbase[mod] + result;//将余数放入结果；
+		int i = 0;
+		quotient = temp_quotient;
+		for(; i < quotient.length(); i++)
+		{//去掉商前面的0
+			if(quotient[i] != '0')
+				break;
+		}
+		quotient = quotient.erase(0, i);
+	}
+	return result;
+}
+
+std::vector<char> addition(std::vector<char> A, std::vector<char> B, int inputBase, int outputBase)
 {
 	/*加法运算*/
 	int size_A = A.size();
@@ -167,18 +174,32 @@ std::vector<char> addition(std::vector<char> A, std::vector<char> B, int inputBa
 		}
 		res = numberbase[temp % inputBase] + res;
 		temp /= inputBase;
-		std::cout<<"res: "<<res<<std::endl;
+		// std::cout<<"res: "<<temp<<std::endl;
 	}
+	res = numberbase[temp % inputBase] + res; // 最高位以上有进位
+	res = covert_M2N(inputBase, outputBase, res);
 	
 	for (int j = 0; j < res.length(); j++)
 	{
 		output.push_back(res[j]);
 		// std::cout<<"res[j]: "<<res[j]<<' ';
 	}
+
+	// for (int j = 0; j < res.length(); j++)
+	// {	
+	// 	if ((j == 0) && (res[j] == '0'))
+	// 		continue;
+	// 	output.push_back(res[j]);
+	// 	// std::cout<<"res[j]: "<<res[j]<<' ';
+	// }
+	// std::cout<<"output.size()"<<output.size()<<std::endl;
+	if (output.size() == 0)
+		output.push_back('0');
+
 	return output;
 }
 
-std::vector<char> subtraction(std::vector<char> A, std::vector<char> B, int sign_A, int sign_B, int inputBase)
+std::vector<char> subtraction(std::vector<char> A, std::vector<char> B, int sign_A, int sign_B, int inputBase, int outputBase)
 {
 	/*加法运算*/
 	int size_A = A.size();
@@ -222,18 +243,28 @@ std::vector<char> subtraction(std::vector<char> A, std::vector<char> B, int sign
 					// std::cout<<"res: "<<res<<std::endl;
 				}
 			}
-		}else if (flag_bigger == 1) // |A| < |B|
+			// std::cout<<"res1: "<<res<<std::endl;
+			res = numberbase[temp % inputBase] + res; // 最高位以上有进位
+
+			res = covert_M2N(inputBase, outputBase, res);
+			// std::cout<<"res2: "<<res<<std::endl;
+		}
+		else if (flag_bigger == 1) // |A| < |B|
 		{
 			while (i_A >= 0 || i_B >= 0)
 			{	
 				if (i_A >= 0)
 				{
+					// std::cout<<"A[i_A]: "<<A[i_A]<<' '<<i_A<<std::endl;
 					temp -= find_index(A[i_A]);
+					// std::cout<<"temp: "<<temp<<std::endl;
 					i_A--;
 				}
 				if (i_B >= 0)
-				{
+				{	
 					temp += find_index(B[i_B]);
+					// std::cout<<"B[i_B]: "<<B[i_B]<<' '<<i_B<<std::endl;
+					// std::cout<<"temp: "<<temp<<std::endl;
 					i_B--;
 				}
 
@@ -244,11 +275,17 @@ std::vector<char> subtraction(std::vector<char> A, std::vector<char> B, int sign
 					// std::cout<<"res: "<<res<<std::endl;
 				}else
 				{
+					
 					res = numberbase[temp % inputBase] + res;
 					temp /= inputBase;
 					// std::cout<<"res: "<<res<<std::endl;
 				}
 			}
+			// std::cout<<"res3: "<<res<<std::endl;
+			res = numberbase[temp % inputBase] + res; // 最高位以上有进位
+
+			res = covert_M2N(inputBase, outputBase, res);
+			// std::cout<<"res4: "<<res<<std::endl;
 			res = '-' + res;
 		}
 	}else // A:-, B:+
@@ -280,6 +317,11 @@ std::vector<char> subtraction(std::vector<char> A, std::vector<char> B, int sign
 					// std::cout<<"res: "<<res<<std::endl;
 				}
 			}
+			// std::cout<<"res5: "<<res<<std::endl;
+			res = numberbase[temp % inputBase] + res; // 最高位以上有进位
+			
+			res = covert_M2N(inputBase, outputBase, res);
+			// std::cout<<"res6: "<<res<<std::endl;
 			res = '-' + res;
 		}
 		else if (flag_bigger == 1) // |A| < |B|
@@ -309,9 +351,14 @@ std::vector<char> subtraction(std::vector<char> A, std::vector<char> B, int sign
 					// std::cout<<"res: "<<res<<std::endl;
 				}
 			}
+			res = numberbase[temp % inputBase] + res; // 最高位以上有进位
+	
+			// std::cout<<"res7: "<<res<<std::endl;
+			res = covert_M2N(inputBase, outputBase, res);
+			// std::cout<<"res8: "<<res<<std::endl;
 		}
 	}
-
+	
 	
 	for (int j = 0; j < res.length(); j++)
 	{	
@@ -320,10 +367,13 @@ std::vector<char> subtraction(std::vector<char> A, std::vector<char> B, int sign
 		output.push_back(res[j]);
 		// std::cout<<"res[j]: "<<res[j]<<' ';
 	}
+	// std::cout<<"output.size()"<<output.size()<<std::endl;
+	if (output.size() == 0)
+		output.push_back('0');
 	return output;
 }
 
-std::vector<char> addition_negative(std::vector<char> A, std::vector<char> B, int inputBase)
+std::vector<char> addition_negative(std::vector<char> A, std::vector<char> B, int inputBase, int outputBase)
 {
 	/*加法运算*/
 	int size_A = A.size();
@@ -340,23 +390,39 @@ std::vector<char> addition_negative(std::vector<char> A, std::vector<char> B, in
 		if (i_A >= 0)
 		{
 			temp += find_index(A[i_A]);
+			// std::cout<<"A[i_A]: "<<A[i_A]<<' '<<temp<<std::endl;
 			i_A--;
 		}
 		if (i_B >= 0)
-		{
+		{	
 			temp += find_index(B[i_B]);
+			// std::cout<<"temp: "<<temp<<std::endl;
 			i_B--;
 		}
 		res = numberbase[temp % inputBase] + res;
 		temp /= inputBase;
 		// std::cout<<"res: "<<res<<std::endl;
 	}
+	res = numberbase[temp % inputBase] + res; // 最高位以上有进位
+	res = covert_M2N(inputBase, outputBase, res);
 	res = '-' + res;
 
+	// for (int j = 0; j < res.length(); j++)
+	// {
+	// 	output.push_back(res[j]);
+	// }
+
 	for (int j = 0; j < res.length(); j++)
-	{
+	{	
+		if ((j == 0) && (res[j] == '0'))
+			continue;
 		output.push_back(res[j]);
+		// std::cout<<"res[j]: "<<res[j]<<' ';
 	}
+
+	// std::cout<<"output.size()"<<output.size()<<std::endl;
+	if (output.size() == 0)
+		output.push_back('0');
 
 	return output;
 }
@@ -387,6 +453,7 @@ int main(int argc, char *argv[])
 	inputFilePath = argv[1];
 	if (argc > 2)
 		inputBase = std::stoi(argv[2]);
+		outputBase = inputBase;
 	if (argc > 3)
 		outputBase=std::stoi(argv[3]);
 
@@ -476,24 +543,23 @@ int main(int argc, char *argv[])
 	if (sign_A == 0 && sign_B == 0)
 	{
 		std::cout<<"addition"<<std::endl;
-		results = addition(A, B, inputBase);
+		results = addition(A, B, inputBase, outputBase);
 	}else if ((sign_A == 1 && sign_B == 0) || (sign_A == 0 && sign_B == 1))
 	{
 		std::cout<<"subtraction"<<std::endl;
-		results = subtraction(A, B, sign_A, sign_B, inputBase);
+		results = subtraction(A, B, sign_A, sign_B, inputBase, outputBase);
 	}else if (sign_A == 1 && sign_B == 1)
 	{
 		std::cout<<"addition_negative"<<std::endl;
-		results = addition_negative(A, B, inputBase);
+		results = addition_negative(A, B, inputBase, outputBase);
 	}
 	
-	(results, outputBase);
-	
-	// std::cout<<results.size()<<std::endl;
+	std::cout<<"Result: ";
 	for (auto num = results.begin(); num != results.end(); num++) 
 	{
-		std::cout << *num<<' ';
+		std::cout << *num;
 	}
+	std::cout<<std::endl;
 	return 0;
 }
 

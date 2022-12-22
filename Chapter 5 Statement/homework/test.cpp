@@ -10,8 +10,8 @@ int main(void)
     //     cout<<A.size()<<endl;
     // else if (A.size()<=B.size())
     //     cout<<A.size()<<endl;
-    string C="132465798";
-    cout<<C[1 : C.length()];
+    char C = 'Z';
+    cout<<char(C+32);
 
     return 0;
 }
