@@ -452,10 +452,26 @@ int main(int argc, char *argv[])
 
 	inputFilePath = argv[1];
 	if (argc > 2)
-		inputBase = std::stoi(argv[2]);
-		outputBase = inputBase;
+        if (1 <= std::stoi(argv[2]) && std::stoi(argv[2]) <= 36)
+        {
+            inputBase = std::stoi(argv[2]);
+            outputBase = inputBase;
+        }else
+        {
+
+            std::cout<<"Illegal inputBase"<<isdigit(int(std::stoi(argv[2])))<<std::endl;
+            return 0;
+        }
 	if (argc > 3)
-		outputBase=std::stoi(argv[3]);
+        if (1 <= std::stoi(argv[3]) && std::stoi(argv[3]) <= 36)
+        {
+            outputBase=std::stoi(argv[3]);
+            return 0;
+        }else
+        {
+            std::cout<<"Illegal outputBase"<<std::endl;
+        }
+		
 
 	fileContent=readLinesFromFile(inputFilePath);
 	std::cout<< "InputBase "<<inputBase<<" OutputBase "<<outputBase<<'\n';
@@ -484,6 +500,11 @@ int main(int argc, char *argv[])
 			while ( j <= lines.size())
 			{
 				A.push_back(lines[j]);
+				if ((lines[j] == '+' || lines[j] == '-') && (j != 0))
+				{
+                    std::cout<<"Illegal Parameter Expression!"<<std::endl;
+                    return 0;
+				}
 				j++;
 			}
 		}else if (i == 1)
@@ -492,6 +513,11 @@ int main(int argc, char *argv[])
 			while ( j <= lines.size())
 			{
 				B.push_back(lines[j]);
+				if ((lines[j] == '+' || lines[j] == '-') && (j != 0))
+				{
+                    std::cout<<"Illegal Parameter Expression!"<<std::endl;
+                    return 0;
+				}
 				j++;
 			}
 		}
@@ -538,6 +564,23 @@ int main(int argc, char *argv[])
 			B.erase(B.begin());
 		else if (B.empty() || B[0] != '0')
 			zero_flag = 1;
+	}
+
+	for (int i = 0; i < A.size()-1; i++ )
+	{
+		if (find_index(A[i]) >= inputBase)
+		{
+			std::cout<<"Illegal Parameter!"<<std::endl;
+			return 0;
+		}
+	}
+	for (int i = 0; i < B.size()-1; i++ )
+	{
+		if (find_index(B[i]) >= inputBase)
+		{
+			std::cout<<"Illegal Parameter!"<<std::endl;
+			return 0;
+		}
 	}
 
 	if (sign_A == 0 && sign_B == 0)
