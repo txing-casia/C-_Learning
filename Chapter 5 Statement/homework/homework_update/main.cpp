@@ -30,41 +30,6 @@ std::vector<std::string> readLinesFromFile(const std::string &filePath)
 }
 
 
-// void ConvertT2N(int number,int n)
-// {
-//     stack<char> s;
-//     if (number == 0) {  //特殊情况，当输入是0时，输出也是0，否则输入0时就卡那了
-//         s.push(0);
-//     } else {
-//         while (number) {
-//             s.push(number % n);
-//             number /= n;
-//         }
-//     }
-//     // 把栈中的余数输出
-//     while (!s.empty()) {
-//         printf("%d", s.top());
-//         s.pop();
-//     }
-// }
-
-
-
-// std::string convertoutputbase(std::string res, int outputbase)
-// {
-// 	int i = res.length()-1; 
-// 	std::string ans="";
-// 	do {
-// 		temp += find_index(res[i]);
-// 		num = res[];
-// 		ans = numberbase[num % outputbase] + ans;
-		
-// 		num /= 26;
-// 	} while(num);
-// 	return ans;
-// }
-
-
 int find_index(char N)
 {
 	/*查找字符 N 在 numberbase 中对应的序号*/
@@ -115,11 +80,13 @@ int find_bigger(std::vector<char> A, std::vector<char> B)
 
 std::string covert_M2N(int M, int N, std::string str)
 {
+    // 该进制转换函数参考博客https://blog.csdn.net/eeelan/article/details/77532538
+    // 作者：eeelan
 	int currentnum = 0;//当前位
 	int mod = 0;//余数
-	std::string quotient = str;//商串
-	std::string result = "";//存放转换后的结果串
-	std::string temp_quotient = "";//存放中间商串
+	std::string quotient = str;//商
+	std::string result = "";//存放转换后的结果
+	std::string temp_quotient = "";//存放中间商
 	while(quotient.length() > 0)
 	{
 		temp_quotient = "";
@@ -128,7 +95,7 @@ std::string covert_M2N(int M, int N, std::string str)
 		{
 			currentnum = find_index(quotient[i]);
 			if(currentnum == -1)
-				return "Error,invilade";
+				return "Error";
 			mod = mod * M + currentnum;
 			temp_quotient += numberbase[mod / N];//存每一位上的商
 			mod = mod % N;
@@ -407,10 +374,6 @@ std::vector<char> addition_negative(std::vector<char> A, std::vector<char> B, in
 	res = covert_M2N(inputBase, outputBase, res);
 	res = '-' + res;
 
-	// for (int j = 0; j < res.length(); j++)
-	// {
-	// 	output.push_back(res[j]);
-	// }
 
 	for (int j = 0; j < res.length(); j++)
 	{	
@@ -566,6 +529,7 @@ int main(int argc, char *argv[])
 			zero_flag = 1;
 	}
 
+	//判断输入的操作数的进制是否合法
 	for (int i = 0; i < A.size()-1; i++ )
 	{
 		if (find_index(A[i]) >= inputBase)
