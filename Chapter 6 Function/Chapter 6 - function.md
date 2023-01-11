@@ -164,6 +164,8 @@
   - 通常用于描述复杂的迭代过程
 - 内联函数 / constexpr 函数 / consteval 函数
   - `inline void fun()`//链接的时候避免重复定义函数的报错
+  - `constexpr`编译期常量
+  - `consteval`只能在编译期执行
 - 函数指针
   - 函数指针与重载
   - 将函数指针作为函数参数
