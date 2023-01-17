@@ -43,14 +43,22 @@
     - ```c++
       std::cout.setf(std::ios_base::showpos); // 输出如果是正数，自动加正号
       std::cout<< x <<std::endl;
-      std::cout.width(10); // 输出10个字符，不足10个的，前面用空字符替代
+      std::cout.width(10); // 输出10个字符，不足10个的，前面用空格替代.
+      std::cout.fill('.'); // 用'.'替代上一条语句中设定的空格
       ```
 
   - 注意width方法的特殊性：触发后被重置
 
+### 操作符
+
+- ```c++
+  #include <iomanip>
+  cout<< showpos << setw(10) << setfill('.') << x;
+  ```
+
 - 
 
-
+- `cout<< showpos << x;`
 
 
 
