@@ -65,8 +65,6 @@
   cout<< showpos << setw(10) << setfill('.') << x;
   ```
 
-- 
-
 - `cout<< showpos << x;`
 
 
