@@ -70,7 +70,36 @@
 - 文件操作
 
   - basic_ifstream / basic_ofstream / basic_fstream
+
+    ```c++
+    #include <iostream>
+    #include <fstream>
+    int main()
+    {
+    	std::ofstream outFile("my_file"); // 输出流 
+    	outFile << "Hello\n"
+    }
+    ```
+
+    ```c++
+    #include <iostream>
+    #include <fstream>
+    int main()
+    {
+    	std::ifstream inFile("my_file"); // 输入流 
+    	std::string x;
+    	inFile >> x;
+    	std::cout << x << '\n';
+    }
+    ```
+
   - 文件流可以处于打开/关闭两种状态，处于打开状态时无法再次打开，只有打开时才能I/O
+
+    ```
+    .is_open()
+    .open()
+    .close()
+    ```
 
 - 文件流的打开模式
 
@@ -89,11 +118,13 @@
 
   - binary能静止系统特定的转换
 
-  - 避免意义不明确的流使用方式（如ifstream+out）
+  - 避免意义不明确的流使用方式（如ifstream+out） 
+
+  
 
 
 
-
+ 
 
 
 
