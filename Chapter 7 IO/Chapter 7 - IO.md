@@ -131,6 +131,16 @@
   in | out | trunc    如果文件存在i，将长度截断为0；否则建立文件供更新使用
   ```
   
+- 内存流：basic_istringstream/basic_ostringstream/basic_stringstream
+  
+- 也会受打开模式影响（in/out/ate/app）
+  
+- 使用str()方法获取底层所对应的字符串
+  
+  - 小心避免使用str().c_str()的形式获取C风格字符串
+  
+- 基于字符串流的字符串拼接优化操作
+  
   
   
   
