@@ -133,6 +133,18 @@
   
 - 内存流：basic_istringstream/basic_ostringstream/basic_stringstream
   
+  ```c++
+  #include <iostream>
+  #include <sstream>
+  int main()
+  {
+  	std::ostringstream obj1;
+  	obj1 << 1234;
+      auto res = obj1.str();
+      std::out<< res << std::endl;
+  }
+  ```
+  
 - 也会受打开模式影响（in/out/ate/app）
   
 - 使用str()方法获取底层所对应的字符串
