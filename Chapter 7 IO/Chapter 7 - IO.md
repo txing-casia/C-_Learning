@@ -145,6 +145,22 @@
   }
   ```
   
+  ```c++
+  #include <iostream>
+  #include <sstream>
+  int main()
+  {
+  	std::ostringstream obj1;
+  	obj1 << 1234;
+      auto res = obj1.str();
+      
+  	std::istringstream obj2(res);
+  	int x;
+      obj2 >> x;
+      std::out<< x << std::endl;
+  }
+  ```
+  
 - 也会受打开模式影响（in/out/ate/app）
   
 - 使用str()方法获取底层所对应的字符串
@@ -153,14 +169,39 @@
   
 - 基于字符串流的字符串拼接优化操作
   
+  ```c++
+  std::ostringstream obj;
+  obj << "Hello";
+  obj << " world";
+  obj << "Hello";
+  obj << " world";
+  std::cout << obj.str() << std::endl;
+  ```
+### 流的状态
+
+- iostate
+  - failbit / badbit / eofbit / goodbit
+- 检测流的状态
+  - good() / fail() / bad() / eof() 方法
+  - 转换为bool值（参考cppreference）
+- 注意区分fail与eof
+  - 可能会被同时设置，但二者含义不同
+  - 转换为bool值时不会考虑eof
+- 通常来说，只要流处于某种错误状态时，插入/提取操作就不会生效
+
+
+
   
+
   
+
   
+
   
 
 
 
- 
+
 
 
 
