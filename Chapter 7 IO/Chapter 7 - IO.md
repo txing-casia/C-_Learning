@@ -197,16 +197,47 @@
 ### 流的定位
 
 - 获取流的位置
+
   - tellg() / tellp() 可以用于获取输入 / 输出流的位置（pos_type类型）
   - 两个方法可能会失败，此时返回 pos_type(-1)
+
 - 设置流位置
-  - seekg() / seekp() 用于设置输入 / 输出流的位置
+
+  - seekg() / seekp() 用于设置输入 / 输出流的位置（覆盖而非插入）
   - 这两个方法分别有两个重载版本
     - 设置绝对位置：传入 pos_type 进行设置
     - 设置相对位置：通过偏移量（字符个数 ios_bose::beg）+ 流位置符号的方式设置
       - ios_base::beg
       - ios_base::cur
       - ios_base::end
+
+- ```c++
+  #include <sstream>
+  #include <iostream>
+  int main()
+  {
+  	std::ostringstream os("hello, world");
+  	os.seekp(7);
+  	os << 'W';
+  	os.seekp(0,std::ios_base::end);
+  	os << '!';
+  	os.seekp(0);
+  	os << 'H';
+  	std::cout << os.str() << '\n';
+  }
+  ```
+
+### 流的同步
+
+- 基于flush() / sync() / unitbuf 的同步
+  - flush() 用于输出流同步，刷新缓冲区
+  - sync() 用于输入流同步，其实现逻辑是编译器所定义的
+  - 输出流可以通过设置 unitbuf 来保证每次输出后自动同步
+- 基于绑定（tie）的同步
+  - 流可以绑定到一个输出流上，这样在每次输入 / 输出前可以刷新输出流的缓冲区
+  - 比如：cin 绑定到了cout上
+- 与C语言标准IO库的同步
+  - 缺省
 
 
 
