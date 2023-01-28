@@ -194,6 +194,20 @@
   - setState：将某个状态附加到现有的流状态上
 - 捕获流异常：exceptions方法
 
+### 流的定位
+
+- 获取流的位置
+  - tellg() / tellp() 可以用于获取输入 / 输出流的位置（pos_type类型）
+  - 两个方法可能会失败，此时返回 pos_type(-1)
+- 设置流位置
+  - seekg() / seekp() 用于设置输入 / 输出流的位置
+  - 这两个方法分别有两个重载版本
+    - 设置绝对位置：传入 pos_type 进行设置
+    - 设置相对位置：通过偏移量（字符个数 ios_bose::beg）+ 流位置符号的方式设置
+      - ios_base::beg
+      - ios_base::cur
+      - ios_base::end
+
 
 
 
