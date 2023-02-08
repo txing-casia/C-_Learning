@@ -59,10 +59,19 @@
 
   - 不要轻易使用
 
+### 智能指针
 
-
-
-
+- 使用new与delete的问题：内存所有权不清晰，容易产生不销毁，多销毁的情况
+- C++的解决方案：智能指针
+  - `auto_ptr`（c++17删除）
+  - `shared_ptr`/`uniuqe_ptr`/`weak_ptr`
+- shared_ptr——基于引用计数的共享内存解决方案
+  - 基本用法
+  - reset/get方法
+  - 指定内存回收逻辑
+  - std::make_shared
+  - 对对象数组的支持（C++17支持shared_ptr<T[]>；C++20支持make_shared分配数组）
+  - 注意：shared_ptr管理的对象不要调用delete销毁
 
 
 
