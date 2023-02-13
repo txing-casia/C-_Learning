@@ -80,17 +80,32 @@
   - reset() /get() 方法
 
     - get()返回T*
-    - 
+    
+- 指定内存回收逻辑
+  
+- std::make_shared
+  
+- 对对象数组的支持（C++17支持shared_ptr<T[]>；C++20支持make_shared分配数组）
+  
+- 注意：shared_ptr管理的对象不要调用delete销毁
 
-  - 指定内存回收逻辑
+- unique_ptr——独占内存的解决方案
 
-  - std::make_shared
+  - 基本用法
 
-  - 对对象数组的支持（C++17支持shared_ptr<T[]>；C++20支持make_shared分配数组）
+    - ```c++
+      std::unique_ptr<int> x(new int(3)); 
+      std::unique_ptr<int> y = std::move(x); // y夺走x地址的所有权
+      ```
 
-  - 注意：shared_ptr管理的对象不要调用delete销毁
+  - unique_ptr 不支持复制，但可以移动
 
+  - 为unique_ptr指定内存回收逻辑
 
+- weak_ptr——防止循环引入而引入的智能指针
+
+  - 基于shared_ptr构造
+  - lock() 方法
 
 
 
