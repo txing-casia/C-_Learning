@@ -102,10 +102,43 @@
 
   - 为unique_ptr指定内存回收逻辑
 
+    - ```c++
+      void fun(int* ptr)
+      {
+      	std::cout << "fun is called\n";
+      	delete ptr;
+      }
+      int main()
+      {
+      	std::shared_ptr<int> x(new int(3), fun); // 为x指定删除器fun，unique_ptr不能指定删除器
+      }
+      ```
+
 - weak_ptr——防止循环引入而引入的智能指针
 
   - 基于shared_ptr构造
   - lock() 方法
+
+### 动态内存的相关问题
+
+- sizeof不会返回动态分配的内存大小
+
+- 使用分配器（allocator）来分配内存
+
+  - ```c++
+    std::allocator<int> al;
+    int* ptr = al.allocate(3);//只分配内存，没有初始化
+    ```
+
+- 使用malloc/free来管理内存
+
+- 使用aligned_alloc来分配对齐内存
+
+- 动态内存与异常安全
+
+- C++对于垃圾回收的支持
+
+
 
 
 
