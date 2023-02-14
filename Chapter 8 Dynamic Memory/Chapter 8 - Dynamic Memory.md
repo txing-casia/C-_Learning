@@ -132,9 +132,19 @@
 
 - 使用malloc/free来管理内存
 
+  - ```c++
+    int *p1 = malloc(4*sizeof(int)); // 这三条语句分配内存等价
+    int *p2 = malloc(sizeof(int[4]));
+    int *p3 = malloc(4*sizeof *p3);
+    
+    free(p1);
+    free(p2);
+    free(p3);
+    ```
+
 - 使用aligned_alloc来分配对齐内存
 
-- 动态内存与异常安全
+- 动态内存与异常安全，避免异常后内存没有释放导致内存泄露
 
 - C++对于垃圾回收的支持
 
