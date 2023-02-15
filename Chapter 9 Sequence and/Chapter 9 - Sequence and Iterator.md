@@ -52,3 +52,19 @@
     - 填充与交换：fill, swap
     - 比较操作：<=>
     - 迭代器
+
+- vector容器模板：元素可变
+
+- 提供的接口
+
+  - 与array很类似，但有特殊性
+  - 容量相关接口：capacity / reserve / shrink_to_fit
+  - 附加元素接口：push_back / emplace_back
+  - 元素插入接口：insert / emplace
+  - 元素删除接口：pop_back / erase
+
+- 注意
+
+  - vector不提供push_front / pop_front，可以使用insert / erase 模拟，但效率不高
+  - swap效率较高
+  - 写操作可能会导致迭代器失效
