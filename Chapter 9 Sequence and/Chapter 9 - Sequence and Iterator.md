@@ -80,7 +80,7 @@
 - forward_list 容器模板：单向链表
 
   - 目标：一个成本较低的线性表实现
-  - 其迭代器只支持递增操作，因此无rbegin/rend
+  - 其迭代器只支持递增操作，因此无rbegin / rend
   - 不支持size
   - 不支持pop_back / push_back
   - XXX_after操作
