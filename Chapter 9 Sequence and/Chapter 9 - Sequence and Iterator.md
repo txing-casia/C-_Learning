@@ -85,4 +85,18 @@
   - 不支持pop_back / push_back
   - XXX_after操作
 
-- 
+- deque容器模板：vector与list的折衷
+  - push_back / push_front速度较快
+  - 在序列中间插入、删除速度较慢
+- basic_string容器模板：实现了字符串相关的接口
+  - 使用char实例化出std::string
+  - 提供了如find、substr等字符串特有的接口
+  - 提供了数值与字符串转换的接口
+  - 针对短字符串的优化（short string optimization: SSO）
+
+
+
+
+
+
+
