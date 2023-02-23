@@ -93,6 +93,11 @@
   - 提供了如find、substr等字符串特有的接口
   - 提供了数值与字符串转换的接口
   - 针对短字符串的优化（short string optimization: SSO）
+- 使用键进行索引
+  - set/map/multiset/multmap
+  - unordered_set / unordered_map / unordered_multiset / unordered_multimap
+- set / map / multiset /multimap 底层使用红黑树实现
+- unordered_xxx底层使用hash实现
 
 
 
