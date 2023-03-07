@@ -105,17 +105,20 @@
 
 - unordered_xxx底层使用hash实现
 
-- set 
+### 关联容器
+
+- **set** 
+
   - 通常来说，元素需要支持使用 < 比较大小
   - 或者采用自定义的比较函数来引入大小关系
   - 插入元素：insert / emplace / emplace_hint
   - 删除元素：erase
   - 访问元素：find / contains
   - 修改元素：extract
-  
+
 - 注意：set迭代器所指向的对象是const的，不能通过其修改元素
 
-- map
+- **map**
 
   - 树中的每个节点是一个std::pair
   - 键（pair.first）需要支持使用<比较大小
@@ -140,12 +143,12 @@
     m.erase(3); // 删除
     ```
 
-- 注意
+  - 注意
 
-  - map迭代器所指向的对象是std::pair，其键是const类型
-  - []操作不能用于常量对象
-  
-- multiset / multimap
+    - map迭代器所指向的对象是std::pair，其键是const类型
+    - []操作不能用于常量对象
+
+- **multiset / multimap**
 
   - 与set  / map 类似，但允许重复的键
 
@@ -164,7 +167,7 @@
     }
     ```
 
-- unordered_set / unordered_map / unordered_multiset / unordered_multimap
+- **unordered_set / unordered_map / unordered_multiset / unordered_multimap**
 
   - 与set / map相比查找性能更好
   - 但插入操作一些情况下会慢
@@ -177,6 +180,23 @@
 
   - 自定义hash与判等函数
 
+
+### 适配器和生成器
+
+- 类型适配器
+  - basic_string_view（c++17）
+    - 可以基于std::string，C字符串，迭代器构造
+    - 提供成本较低的操作接口
+    - 不可进行写操作
+
+  - span（c++20）
+    - 可基于C数组、array等构造
+    - 可读写
+
+- 接口适配器
+  - stack / queue / priority_queue
+  - 对底层序列容器进行封装，对外展现栈、队列与优先级队列的接口
+  - priority_queue 在使用时其内部包含的元素需要支持比较操作
 - 
 
 
