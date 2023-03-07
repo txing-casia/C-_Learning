@@ -183,20 +183,74 @@
 
 ### 适配器和生成器
 
-- 类型适配器
+- 类型适配器，兼容不同类型的数据
+
   - basic_string_view（c++17）
+
     - 可以基于std::string，C字符串，迭代器构造
-    - 提供成本较低的操作接口
+
+      ```c++
+      // 字符串调用
+      #inclide <string_view>
+      void fun(const std::string& str){}
+      void fun(std::string_view str)
+      ```
+
+    - 提供成本较低的操作接口 `std::string_view str`
+
     - 不可进行写操作
 
   - span（c++20）
+
     - 可基于C数组、array等构造
+
     - 可读写
 
+      ```c++
+      #include <span>
+      #include <vector>
+      void fun(std::span input){
+      	for (auto P : input){
+      		std::cout << p << ' ';
+      	}
+      	std::cout << endl;
+      }
+      
+      int a[3] = {1,2,3};
+      std::vector<int> s{1,2,3};
+      fun(a);
+      fun(s);
+      ```
+
 - 接口适配器
+
   - stack / queue / priority_queue
   - 对底层序列容器进行封装，对外展现栈、队列与优先级队列的接口
   - priority_queue 在使用时其内部包含的元素需要支持比较操作
+
+- 数值适配器（C++20）：std::ranges::XXX_view, std::ranges::views::XXX, std::views::XXX
+
+  - 可以将一个输入区间中的数值变换后输出
+
+  - 数值适配器可以组合，引入复杂的数值适配逻辑
+
+    ```c++
+    #include <ranges>
+    #include <vector>
+    bool isEven(int i){
+    	return i % 2 == 0;
+    }
+    std::vector<int> v{1,2,3,4,5};
+    for (auto p : std::ranges::filter_view(v,isEven)){
+    	std::cout<<p<<' '; // 过滤奇数，只会打印偶数
+    }
+    ```
+
+- 生成器（C++20）
+
+  - std::ranges::itoa_view, std::ranges::views::itoa, std::views::itoa
+  - 可以在运行期生成无限长或有限长的数值序列
+
 - 
 
 
