@@ -77,7 +77,7 @@
   - 提供了pop_front / splice 等接口
   - 写操作通常不会改变迭代器的有效性
 
-- forward_list 容器模板：单向链表
+- **forward_list 容器模板**：单向链表
 
   - 目标：一个成本较低的线性表实现
   - 其迭代器只支持递增操作，因此无rbegin / rend
@@ -85,19 +85,113 @@
   - 不支持pop_back / push_back
   - XXX_after操作
 
-- deque容器模板：vector与list的折衷
+- **deque容器模板**：vector与list的折衷
+  
   - push_back / push_front速度较快
   - 在序列中间插入、删除速度较慢
-- basic_string容器模板：实现了字符串相关的接口
+  
+- **basic_string容器模板**：实现了字符串相关的接口
+  
   - 使用char实例化出std::string
   - 提供了如find、substr等字符串特有的接口
   - 提供了数值与字符串转换的接口
   - 针对短字符串的优化（short string optimization: SSO）
+  
 - 使用键进行索引
   - set/map/multiset/multmap
   - unordered_set / unordered_map / unordered_multiset / unordered_multimap
+  
 - set / map / multiset /multimap 底层使用红黑树实现
+
 - unordered_xxx底层使用hash实现
+
+- set 
+  - 通常来说，元素需要支持使用 < 比较大小
+  - 或者采用自定义的比较函数来引入大小关系
+  - 插入元素：insert / emplace / emplace_hint
+  - 删除元素：erase
+  - 访问元素：find / contains
+  - 修改元素：extract
+  
+- 注意：set迭代器所指向的对象是const的，不能通过其修改元素
+
+- map
+
+  - 树中的每个节点是一个std::pair
+  - 键（pair.first）需要支持使用<比较大小
+  - 或者采用自定义的比较函数来引入大小关系
+  - 访问元素：find / contains / [] / at
+
+  - 用法
+
+    ```c++
+    for (auto [k, v] : m){
+    	cout << k << ' ' << v << endl;
+    }
+    ```
+
+  - 插入
+
+    ```c++
+    std::map<int, bool> m;
+    m.insert(std::pair<int, bool>(3, true)); // 插入
+    auto ptr = m.find(3);
+    cout << ptr->first << ' ' << ptr->second;
+    m.erase(3); // 删除
+    ```
+
+- 注意
+
+  - map迭代器所指向的对象是std::pair，其键是const类型
+  - []操作不能用于常量对象
+  
+- multiset / multimap
+
+  - 与set  / map 类似，但允许重复的键
+
+  - 元素访问
+
+    - find返回首个查找到的元素
+    - count返回元素个数
+    - lower_bound / upper_bound / equal_range 返回查找到的区间
+
+  - ```c++
+    std::multiset<int> s{1,3,1};
+    auto b = s.lower_bound(1);
+    auto e = s.upper_bound(1);
+    for (auto ptr = b; ptr != e; ++ptr){
+    	std::cout << *ptr << std::endl;
+    }
+    ```
+
+- unordered_set / unordered_map / unordered_multiset / unordered_multimap
+
+  - 与set / map相比查找性能更好
+  - 但插入操作一些情况下会慢
+  - 其键需要支持两个操作
+    - 转换为hash值
+    - 判等
+
+  - 除 == ，!= 外，不支持容器级的关系运算
+    - 但==，!= 速度较慢
+
+  - 自定义hash与判等函数
+
+- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
