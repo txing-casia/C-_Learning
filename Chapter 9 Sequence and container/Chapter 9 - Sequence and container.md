@@ -248,8 +248,16 @@
 
 - 生成器（C++20）
 
-  - std::ranges::itoa_view, std::ranges::views::itoa, std::views::itoa
+  - std::ranges::iota_view, std::ranges::views::iota, std::views::iota
+
   - 可以在运行期生成无限长或有限长的数值序列
+
+    ```c++
+    for (int i : std::views::iota(1) | std::views::take(9) // std::views::iota(1)生成无限长的序列，std::views::take(9)接收|之前的容器，只取前9个值
+    	std::cout << i;
+    ```
+
+    
 
 - 
 
