@@ -192,17 +192,62 @@
 
 - 初始化列表：区分数据成员的初始化与赋值
 
+  ```c++
+  class Str
+  {
+  public:
+      Str(const std::string& val)
+      {
+          x = val;  // 赋值而不是初始化
+      }
+  	void fun()
+      {
+  		std::cout << x << std::endl;
+      }
+  };
+  ```
+
   - 通常情况下可以提升系统性能
+
+  ```c++
+  class Str
+  {
+  public:
+      // 直接使用val初始化x，用0初始化y
+      Str(const std::string& val) : x(val), y(0) // x和y顺序可颠倒，和使用顺序无关
+      {
+          cout << x;
+      }
+  private:
+      std::string x;
+      int y;
+  };
+  ```
+
   - 一些情况下必须使用初始化列表（如类中包含引用成员）
   - 注意元素的初始化顺序与其声明顺序相关，与初始化列表中的顺序无关
   - 使用初始化列表覆盖类内成员初始化的行为
-
+  
 - 缺省构造函数：不需要提供实际参数就可以调用的构造函数
 
   - 如果类中没有提供任何构造函数，那么在条件允许的情况下，编译器会合成一个缺省构造函数
   - 合成的缺省构造函数会使用缺省初始化来初始化其数据成员
   - 调用缺省构造函数时避免 most vexing parse
   - 使用 default 关键字定义缺省构造函数
+
+```c++
+class Str
+{
+    Str() = default;  // 和编译器自己合成的缺省构造函数一样，代码跳转到第5行
+    Str(const std::string& input) : x(input) {}
+    std::string x;
+};
+
+int main()
+{
+    Str m;
+}
+```
 
 - 
 
