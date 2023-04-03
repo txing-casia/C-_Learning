@@ -64,13 +64,16 @@ int main()
                 // 房间持续性buff结算
                 if(player.buff_room_normal_time != 0){
                     player.HP += room_normal.buff_HP;
+                    cout << "Player HP add: " << room_normal.buff_HP << endl;
                     player.buff_room_normal_time -= 1;
                     if(player.HP > player.HP_max){
                         player.HP = player.HP_max;
+                        cout << "Player HP up to MAX!!" << endl;
                     }
                 }
                 if(player.buff_room_trap_time != 0){
                     player.HP += room_trap.buff_HP;
+                    cout << "Player HP decrease: " << room_trap.buff_HP << endl;
                     player.buff_room_trap_time -= 1;
                     if(player.HP <= 0.){
                         cout << "You died in Base room!" << endl;
@@ -91,13 +94,16 @@ int main()
                 // 房间持续性buff结算
                 if(player.buff_room_normal_time != 0){
                     player.HP += room_normal.buff_HP;
+                    cout << "Player HP add: " << room_normal.buff_HP << endl;
                     player.buff_room_normal_time -= 1;
                     if(player.HP > player.HP_max){
                         player.HP = player.HP_max;
+                        cout << "Player HP up to MAX!!" << endl;
                     }
                 }
                 if(player.buff_room_trap_time != 0){
                     player.HP += room_trap.buff_HP;
+                    cout << "Player HP decrease: " << room_trap.buff_HP << endl;
                     player.buff_room_trap_time -= 1;
                     if(player.HP <= 0.)
                     {
@@ -111,9 +117,11 @@ int main()
                 if((rand()%(bound[1]-bound[0]+1)+bound[0])/double(bound[1]) < room_normal.change_HP_showrate)
                 {
                     player.HP += room_normal.change_HP;  // 0.1概率HP+10
+                    cout << "Player HP up: " << room_normal.change_HP << endl;
                     player.buff_room_normal_time = 2;
                     if(player.HP > player.HP_max){
                         player.HP = player.HP_max;
+                        cout << "Player HP up to MAX!!" << endl;
                     }
                 }
 
@@ -124,7 +132,7 @@ int main()
                     double flag_room_buff_A = ((rand() % int(room_normal.master_buff_max * 20 + 1))
                                                     / double(100)) - room_normal.master_buff_max;
                     Role_Monster monster_A(flag_room_buff_A);
-                    cout << "Monster ATK: " << monster_A.ATK << endl;
+                    cout << "Monster ATK: " << monster_A.ATK << "HP: " << monster_A.HP << endl;
                     fight_monster(&player, &monster_A);
                 }
                 else if(flag_monster_num == 2)
@@ -138,7 +146,7 @@ int main()
 
                     Role_Monster monster_A(flag_room_buff[1]);
                     Role_Monster monster_B(flag_room_buff[0]);
-                    cout << "Monster ATK: " << monster_A.ATK << ", " << monster_B.ATK << endl;
+                    cout << "Monster ATK: " << monster_A.ATK << ", " << monster_B.ATK<< "HP: " << monster_A.HP<<", "<< monster_B.HP  << endl;
                     fight_monster(&player, &monster_A, &monster_B);
 
                 }
@@ -156,7 +164,7 @@ int main()
                     Role_Monster monster_A(flag_room_buff[2]),
                                  monster_B(flag_room_buff[1]),
                                  monster_C(flag_room_buff[0]);
-                    cout << "Monster ATK: " << monster_A.ATK << ", " << monster_B.ATK << ", " << monster_C.ATK << endl;
+                    cout << "Monster ATK: " << monster_A.ATK << ", " << monster_B.ATK << ", " << monster_C.ATK << "HP: " << monster_A.HP << ", " << monster_B.HP <<", "<<monster_C.HP  << endl;
                     fight_monster(&player, &monster_A, &monster_B, &monster_C);
                 }
 
@@ -173,6 +181,7 @@ int main()
                 else if(player.HP != 0. && (player.EXP_max - player.EXP) <= 1. * flag_monster_num)
                 {
                     player.HP = player.HP_max;  // 升级，满血
+                    cout << "Player HP up to MAX!!" << endl;
                     player.EXP += 1. * flag_monster_num;
                     player.EXP -= player.EXP_max;
                     cout << "Your LV. Up!!" << endl;
@@ -192,13 +201,16 @@ int main()
                 // 房间持续性buff结算
                 if(player.buff_room_normal_time != 0){
                     player.HP += room_normal.buff_HP;
+                    cout << "Player HP add: " << room_normal.buff_HP << endl;
                     player.buff_room_normal_time -= 1;
                     if(player.HP > player.HP_max){
                         player.HP = player.HP_max;
+                        cout << "Player HP up to MAX!!" << endl;
                     }
                 }
                 if(player.buff_room_trap_time != 0){
                     player.HP += room_trap.buff_HP;
+                    cout << "Player HP decrease: " << room_trap.buff_HP << endl;
                     player.buff_room_trap_time -= 1;
                     if(player.HP <= 0.){
                         cout << "You died in Trap room!" << endl;
@@ -229,6 +241,7 @@ int main()
                 else if(player.HP != 0. && (player.EXP_max - player.EXP) <= 1. * flag_monster_num)
                 {
                     player.HP = player.HP_max;  // 升级，满血
+                    cout << "Player HP up to MAX!!" << endl;
                     player.EXP += 1. * flag_monster_num;
                     player.EXP -= player.EXP_max;
                     cout << "Your LV. Up!!" << endl;
@@ -250,15 +263,17 @@ int main()
                 player.HP += 20.;
                 if(player.buff_room_normal_time != 0){
                     player.HP += room_normal.buff_HP;
+                    cout << "Player HP add: " << room_normal.buff_HP << endl;
                     player.buff_room_normal_time -= 1;
                     if(player.HP > player.HP_max){
                         player.HP = player.HP_max;
+                        cout << "Player HP up to MAX!!" << endl;
                     }
                 }
 
                 flag_monster_num = 1;
                 Role_Monster_King monster_king_A;
-                cout << "Monster King ATK: " << monster_king_A.ATK << endl;
+                cout << "Monster King ATK: " << monster_king_A.ATK << "HP: " << monster_king_A.HP << endl;
                 fight_monster(&player, &monster_king_A);
 
                 if (player.HP <= 0.){
@@ -274,6 +289,7 @@ int main()
                 else if(player.HP != 0. && (player.EXP_max - player.EXP) <= 5. * flag_monster_num)
                 {
                     player.HP = player.HP_max;  // 升级，满血
+                    cout << "Player HP up to MAX!!" << endl;
                     player.EXP += 5. * flag_monster_num;
                     player.EXP -= player.EXP_max;
                     cout << "Your LV. Up!!" << endl;
@@ -294,7 +310,7 @@ int main()
 
                 Role_Monster_with_arm monster_A(player.HP, player.HP_max, player.ATK);
                 monster_A.monster_arm(arm_index);
-                cout << "Monster with arm ATK: " << monster_A.ATK << ", Arm index: " << monster_A.monster_arm_index << endl;
+                cout << "Monster with arm ATK: " << monster_A.ATK << ", " << "HP: " << monster_A.HP << ", Arm index: " << monster_A.monster_arm_index << endl;
                 fight_monster(&player, &monster_A);
 
                 if (player.HP <= 0.){
@@ -310,6 +326,7 @@ int main()
                 else if(player.HP != 0. && (player.EXP_max - player.EXP) <= 2. * flag_monster_num)
                 {
                     player.HP = player.HP_max;  // 升级，满血
+                    cout << "Player HP up to MAX!!" << endl;
                     player.EXP += 2. * flag_monster_num;
                     player.EXP -= player.EXP_max;
                     cout << "Your LV. Up!!" << endl;
@@ -357,6 +374,7 @@ void fight_monster(Role_Player* player, Role_Monster_with_arm* monster_A)
     while (monster_A->HP > 0. && player->HP > 0.)
     {
         player_use_arm(player,monster_A);
+        // cout << "monster HP: " << monster_A->HP << ", " << "monster ATK: " << monster_A->ATK << endl;
         if(monster_A->HP == 0.)
         {
             cout << "Monster with arm is killed!" << endl;
@@ -366,6 +384,8 @@ void fight_monster(Role_Player* player, Role_Monster_with_arm* monster_A)
         // cout << "arm time: " << monster_A->arm_time << "arm ex_ATK: " << monster_A->ex_ATK<<  endl;
 
         monster_use_arm(monster_A, player);
+        cout << "monster HP: " << monster_A->HP << ", " << "monster ATK: " << monster_A->ATK << endl;
+        cout << "Your HP: " << player->HP << ", " << "Your ATK: " << player->ATK << endl;
         if(player->HP == 0.)
         {
             // cout << "You are killed by Monster with arm (ATK: " << monster_A->ATK << ", Arm ATK: " << monster_A->ex_ATK << ")! " << endl;
@@ -396,6 +416,7 @@ void fight_monster(Role_Player* player, Role_Monster_King* monster_A)
         }else
         {
             player->HP = max(0., player->HP - monster_A->ATK);
+            cout << "Your HP: " << player->HP << ", " << "Your ATK: " << player->ATK <<", Your Arm: "<< player->player_arm_index <<endl;
         }
 
         if(player->HP == 0.)
@@ -431,13 +452,14 @@ void fight_monster(Role_Player* player, Role_Monster* monster_A)
         //     player->player_arm(0);  // 武器报废
         // }
         player_use_arm(player, monster_A);
-
+        // cout << "monster_A HP: " << monster_A->HP << ", " << "monster_A ATK: " << monster_A->ATK << endl;
         if(monster_A->HP == 0.)
         {
             cout << "Monster is killed!" << endl;
             break;
         }
         player->HP = max(0., player->HP - monster_A->ATK);
+        cout << "Your HP: " << player->HP << ", " << "Your ATK: " << player->ATK <<", Your Arm: "<< player->player_arm_index <<endl;
         if(player->HP == 0.)
         {
             break;
@@ -453,12 +475,14 @@ void fight_monster(Role_Player* player, Role_Monster* monster_A, Role_Monster* m
         if(monster_A->HP != 0.){
             // monster_A->HP = max(0., monster_A->HP - player->ATK);
             player_use_arm(player, monster_A);
+            // cout << "monster_A HP: " << monster_A->HP << ", " << "monster_A ATK: " << monster_A->ATK << endl;
             if(monster_A->HP <= 0.){
                 cout << "Monster_A is killed!" << endl;
             }
         }else if(monster_B->HP != 0.){
             // monster_B->HP = max(0., monster_B->HP - player->ATK);
             player_use_arm(player, monster_B);
+            // cout << "monster_B HP: " << monster_B->HP << ", " << "monster_B ATK: " << monster_B->ATK << endl;
             if(monster_B->HP <= 0.){
                 cout << "Monster_B is killed!" << endl;
             }
@@ -470,9 +494,12 @@ void fight_monster(Role_Player* player, Role_Monster* monster_A, Role_Monster* m
 
         if(monster_A->HP != 0.){
             player->HP = max(0., player->HP - monster_A->ATK);
+            cout << "Your HP: " << player->HP << ", " << "Your ATK: " << player->ATK <<", Your Arm: "<< player->player_arm_index <<endl;
             player->HP = max(0., player->HP - monster_B->ATK);
+            cout << "Your HP: " << player->HP << ", " << "Your ATK: " << player->ATK <<", Your Arm: "<< player->player_arm_index <<endl;
         }else{
             player->HP = max(0., player->HP - monster_B->ATK);
+            cout << "Your HP: " << player->HP << ", " << "Your ATK: " << player->ATK <<", Your Arm: "<< player->player_arm_index <<endl;
         }
 
         if(player->HP == 0.){
@@ -489,16 +516,19 @@ void fight_monster(Role_Player* player, Role_Monster* monster_A,
     {
         if(monster_A->HP != 0.){
             player_use_arm(player, monster_A);
+            // cout << "monster_A HP: " << monster_A->HP << ", " << "monster_A ATK: " << monster_A->ATK << endl;
             if(monster_A->HP <= 0.){
-                cout << "Monster_A is killed!" << endl;
+                    cout << "Monster_A is killed!" << endl;
             }
         }else if(monster_B->HP != 0.){
             player_use_arm(player, monster_B);
+            // cout << "monster_B HP: " << monster_B->HP << ", " << "monster_B ATK: " << monster_B->ATK << endl;
             if(monster_B->HP <= 0.){
                 cout << "Monster_B is killed!" << endl;
             }
         }else if(monster_C->HP != 0.){
             player_use_arm(player, monster_C);
+            // cout << "monster_C HP: " << monster_C->HP << ", " << "monster_C ATK: " << monster_C->ATK << endl;
             if(monster_C->HP <= 0.){
                 cout << "Monster_C is killed!" << endl;
             }
@@ -510,14 +540,20 @@ void fight_monster(Role_Player* player, Role_Monster* monster_A,
 
         if(monster_A->HP != 0.){
             player->HP = max(0., player->HP - monster_A->ATK);
+            cout << "Your HP: " << player->HP << ", " << "Your ATK: " << player->ATK <<", Your Arm: "<< player->player_arm_index <<endl;
             player->HP = max(0., player->HP - monster_B->ATK);
+            cout << "Your HP: " << player->HP << ", " << "Your ATK: " << player->ATK <<", Your Arm: "<< player->player_arm_index <<endl;
             player->HP = max(0., player->HP - monster_C->ATK);
+            cout << "Your HP: " << player->HP << ", " << "Your ATK: " << player->ATK <<", Your Arm: "<< player->player_arm_index <<endl;
         }else if(monster_B->HP != 0.)
         {
             player->HP = max(0., player->HP - monster_B->ATK);
+            cout << "Your HP: " << player->HP << ", " << "Your ATK: " << player->ATK <<", Your Arm: "<< player->player_arm_index <<endl;
             player->HP = max(0., player->HP - monster_C->ATK);
+            cout << "Your HP: " << player->HP << ", " << "Your ATK: " << player->ATK <<", Your Arm: "<< player->player_arm_index <<endl;
         }else{
             player->HP = max(0., player->HP - monster_C->ATK);
+            cout << "Your HP: " << player->HP << ", " << "Your ATK: " << player->ATK <<", Your Arm: "<< player->player_arm_index <<endl;
         }
 
         if(player->HP == 0.){
@@ -545,6 +581,7 @@ void player_use_arm(Role_Player* player, Role_Monster* monster_A)
         monster_A->HP = max(0., monster_A->HP - player->ATK - player->ex_ATK);
         player->arm_time -= 1;
     }
+    cout << "monster_A HP: " << monster_A->HP << ", " << "monster_A ATK: " << monster_A->ATK << endl;
     if(player->arm_time <= 0){
         player->player_arm(0);  // 武器报废
     }
@@ -568,6 +605,8 @@ void monster_use_arm(Role_Monster_with_arm* player, Role_Player* monster_A)
         monster_A->HP = max(0., monster_A->HP - player->ATK - player->ex_ATK);
         player->arm_time -= 1;
     }
+    cout << "monster_A HP: " << monster_A->HP << ", " << "monster_A ATK: " << monster_A->ATK << endl;
+
     if(player->arm_time <= 0){
         player->monster_arm(0);  // 武器报废
     }
@@ -592,6 +631,8 @@ void player_use_arm(Role_Player* player, Role_Monster_King* monster_A)
         monster_A->HP = max(0., monster_A->HP - player->ATK - player->ex_ATK);
         player->arm_time -= 1;
     }
+    cout << "monster_A HP: " << monster_A->HP << ", " << "monster_A ATK: " << monster_A->ATK << endl;
+
     if(player->arm_time <= 0){
         player->player_arm(0);  // 武器报废
     }
@@ -616,6 +657,8 @@ void player_use_arm(Role_Player* player, Role_Monster_with_arm* monster_A)
         monster_A->HP = max(0., monster_A->HP - player->ATK - player->ex_ATK);
         player->arm_time -= 1;
     }
+    cout << "monster_A HP: " << monster_A->HP << ", " << "monster_A ATK: " << monster_A->ATK << endl;
+
     if(player->arm_time <= 0){
         player->player_arm(0);  // 武器报废
     }

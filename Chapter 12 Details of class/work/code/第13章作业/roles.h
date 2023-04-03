@@ -72,9 +72,9 @@ class Role_Monster_with_arm
 public:
     Role_Monster_with_arm(double player_HP, double player_HP_max, double player_ATK)
     {
-        HP = player_HP * (1 + 0.4);
-        HP_max = player_HP_max * (1 + 0.4);
-        ATK = player_ATK * (1 + 0.4);
+        HP = player_HP * (0 + 0.4);
+        HP_max = player_HP_max * (0 + 0.4);
+        ATK = player_ATK * (0 + 0.4);
     }
     double HP;
     double HP_max;
