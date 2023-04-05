@@ -37,10 +37,31 @@
   - 前向迭代器：可读写，可递增——典型应用为replace算法
   - 双向迭代器：可读写，可递增递减——典型应用为reverse算法
   - 随机访问迭代器：可读写，可增减一个整数——典型应用为sort算法
-
 - 一些算法会根据迭代器类型的不同引入相应的优化：如distance算法
+- 一些特殊的迭代器
+
+  - 插入迭代器：back_insert_iterator / front_insert_iterator / insert_iterator
+  - 流迭代器：istream_iterator / ostream_iterator
+  - 反向迭代器
+  - 移动迭代器：move_iterator
+- 迭代器与哨兵（Sentinel）
+- 并发算法（C++17 / C++20）
+  
+
+  - std::execution::seq
+  - std::execution::par
+  - std::execution::par_unseq
+  - std::execution::unseq
+
+### bind与labmbda表达式
 
 
+
+
+
+  
+
+  
 
 
 
