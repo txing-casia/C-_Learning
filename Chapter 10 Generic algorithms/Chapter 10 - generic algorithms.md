@@ -62,8 +62,42 @@
   - 类：功能强大，但书写麻烦
   - bind：基于已有的逻辑灵活适配，但描述复杂逻辑时语法可能会比较复杂难懂
   - lambda表达式：小巧灵活，功能强大
-- 
 
+### bind
+
+- bind：通过绑定的方式修改可调用对象的调用方式
+- 早期的bind雏形：std::bind1st / std::bind2nd
+
+  - 具有了bind的基本思想，但功能有限
+- std::bind：更加林火的解决方案
+  - 调用std::bind时，传入的参数会被复制，这可能会产生一些调用风险
+  - 可以使用std::ref或std::cref避免复制的行为
+
+- std::bind_front：std::bind的简化形式
+
+### lambda表达式
+
+- lambda表达式：
+  - 为了更灵活地实现调用对象的引入
+  - C++11~C++20持续更新
+    - C++11引入lambda表达式
+    - C++14支持初始化捕获、泛型lambda
+    - C++17引入constexpr lambda，*this捕获
+    - C++20引入concepts，模板lambda
+- lambda表达式会被编译器翻译成类进行处理
+- lambda表达式的基本组成部分
+  - 参数与函数体
+  - 返回类型
+  - 捕获：针对函数体中使用的局部自动对象进行捕获
+    - 值捕获、引用捕获与混合捕获
+    - this捕获
+    - 初始化捕获（C++14）
+    - *this捕获（C++17）
+
+  - 说明符
+    - mutable / constexpr (C++17) / consteval (C++20)...
+
+  - 模板形参（C++20）
 
 
 
