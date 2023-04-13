@@ -84,8 +84,42 @@
     - C++14支持初始化捕获、泛型lambda
     - C++17引入constexpr lambda，*this捕获
     - C++20引入concepts，模板lambda
+  
 - lambda表达式会被编译器翻译成类进行处理
+
 - lambda表达式的基本组成部分
+
+  ```c++
+  #include <iostream>
+  // #include <functional>
+  // #include <memory>
+  int main()
+  {
+      auto x = [](int val) {return val > 3;};
+      int y = 5;
+      int z = 3;
+      auto x = [y,&z](int val) {return val > y;}; // 捕获
+      auto x = [y](int val) mutable
+      {
+          y++;
+          return val > y;
+      };
+      // 复制外部变量
+      auto x = [=](int val) mutable
+      {
+          y++;
+          return val > y;
+      };
+      // 引用外部变量
+      auto x = [&](int val) mutable
+      {
+          y++;
+          return val > y;
+      };
+      std::cout << x(5) << std::endl; 
+  }
+  ```
+  
   - 参数与函数体
   - 返回类型
   - 捕获：针对函数体中使用的局部自动对象进行捕获
@@ -93,14 +127,65 @@
     - this捕获
     - 初始化捕获（C++14）
     - *this捕获（C++17）
-
+  
   - 说明符
-    - mutable / constexpr (C++17) / consteval (C++20)...
-
+    - mutable (内部变量取消const) / constexpr (C++17) / consteval (C++20)...
+  
   - 模板形参（C++20）
+  
+- lambda表达式的深入应用
 
+  - 捕获时计算（C++14）
 
+  - 即调用函数表达式（Immediately-Invoked Function Expression, IIFE）
 
+    ```
+    const auto val = [z = x + y]()
+    {
+    	return z;
+    }(); // 初始化同时执行
+    ```
+
+  - 使用auto避免复制（C++14）
+
+  - Lifting（C++14）
+
+  - 递归调用（C++14）
+
+  ```c++
+  #include<iostream>
+  int main()
+  {
+  	auto factorial = [](int n)
+      {
+          auto f_impl = [](int n, const auto& impl) -> int  // 需要给返回类型
+          {
+              return n > 1 ? n * impl( n - 1, impl) : 1;
+          };
+          return f_impl(n, f_impl);
+      };
+  	std::cout << factorial(5) << std::endl;
+  }
+  ```
+
+### 泛型算法的改进——ranges
+
+- 可以使用容器而非迭代器作为输入
+
+  ```c++
+  #include<ranges>
+  std::vector<int> x{1,2,3,4,5};
+  auto it = std::ranges::find(x,3);
+  auto it = std::ranges::find(x.begin(),x.end(),3);
+  std::cout<<*it<<std::endl;
+  ```
+
+  - 通过std::ranges::dangling避免返回无效的迭代器
+
+- 引入映射概念，简化代码编写
+
+- 引入view，灵活组织程序逻辑
+- 从类型上区分迭代器和哨兵
 
 
 
