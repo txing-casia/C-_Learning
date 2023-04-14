@@ -292,12 +292,79 @@ int main()
   - 通常来说返回当前类型的引用
   - 注意处理给自身赋值的情况
   - 在一些情况下编译器会自动合成
+
+```c++
+struct Str{
+    Str& operator= (const Str& x)  // 类中的拷贝赋值函数
+	{
+    	val = x.val;
+    	a = x.a;
+    	return *this;
+	}
+    int val = 3;
+    std::string a = "abc";
+};
+
+int main()
+{
+    Str m;
+    Str m2 = m;
+}
+```
+
+```c++
+struct Str{
+    Str& operator= (const Str&& x)  // 类中的移动赋值函数
+	{
+        if (&x == this)  // 避免 m=std::move(m)的操作
+        {
+            return *this;
+        }
+    	val = std::move(x.val);
+    	a = std::move(x.a);
+    	return *this;
+	}
+    int val = 3;
+    std::string a = "abc";
+};
+
+int main()
+{
+    Str m;
+    Str m2;
+    m2 = std::move(m);
+}
+```
+
 - 析构函数
   - 函数名：“~”加当前类型，无参数，无返回值
   - 用于释放资源
   - 注意内存回收是在调用完析构函数时才进行
   - 除非显式声明，否则编译器会自动合成一个，其内部逻辑是平凡的
   - 析构函数通常不能抛出异常
+
+```c++
+struct Str
+{
+	~Str()  // 析构函数
+	{
+	}
+};
+```
+
+```c++
+struct Str
+{
+	~Str()  // 析构函数
+	{
+	}
+};
+int main()
+{
+    Str* m = new Str();
+    delete m;  // 用new定义，显式删除才释放内存
+}
+```
 
 
 
