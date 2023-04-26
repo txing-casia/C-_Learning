@@ -391,7 +391,15 @@ int main()
     - 如果只需拷贝行为，那么引入拷贝构造即可
     - 如果不需要拷贝行为，那么将拷贝构造声明为delete函数即可
     - 注意delete移动构造（移动赋值）对C++17的影响
-- 
+
+### 字面值类，成员指针与bind交互
+
+- 字面值类：可以构造编译期常量的类型
+  - 其数据成员需要字面值类型
+  - 提供 constexpr / consteval (返回编译期常量) 构造函数（小心使用consteval）
+  - 平凡的析构函数
+  - 提供 constexpr / consteval 成员函数（小心使用consteval）
+  - 注意：从C++14起 constexpr / consteval 成员函数非 const 成员函数
 
 
 
