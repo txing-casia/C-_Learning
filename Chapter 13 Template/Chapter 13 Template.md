@@ -98,13 +98,92 @@
   - 注意一处定义原则
   - 注意实例化过程中的模板形参推导
 
-- 函数模板的（完全）特化：`template<> void f<int>(int)` / `template<> coid f(int)`
+- 函数模板的（完全）特化：`template<> void f<int>(int)` / `template<> coid f(int)`  （为一些模板参数提供相对特殊的实现逻辑）
 
   - 并不引入新的（同名）名称，只是为某个模板针对特定模板实参提供优化算法
   - 注意与重载的区别
   - 注意特化过程中的模板形参推导
+  
+- 避免使用函数模板的特化
+
+  - 不参与重载解析，会产生反直觉的效果
+  - 通常可以用重载代替
+  - 一些不便于重载的情况：无法建立模板形参与函数形参的管理那
+
+    - 引入“假”函数形参
+    - 通过类模板特化解决
+    - 使用`if constexpr`解决
+
+```c++
+// 使用if constexpr
+#include <iostream>
+#include <type_traits>
+
+template <typename Res, typename T>
+Res fun(T x)
+{
+	if constexpr(std::is_same_v<Res, int>)
+    {
+        std::cout << "1\n";
+    }
+    else
+    {
+        std::cout << "2\n";
+    }
+    return Res{};
+}
+
+int main()
+{
+    int x;
+    fun<int>(&x);
+}
+
+```
+
+```c++
+// 使用假参数
+#include <iostream>
+#include <type_traits>
+
+template <typename Res, typename T>
+Res fun(T x, const Res&)
+{
+    std::cout << "2\n";
+    return Res{};
+}
+
+template <typename T>
+Res fun(T x, const int&)
+{
+    std::cout << "1\n";
+    return int{};
+}
+    
+
+int main()
+{
+    int x;
+    fun<int>(&x, float{});
+}
+```
+
+- （C++20）函数模板的简化形式：使用auto定义模板参数类型
+  - 优势：书写简洁
+  - 劣势：在函数内部需要间接获取参数类型信息
 
 
+```c++
+void fun(auto x)
+{
+}
+
+int main()
+{
+    int x;
+    fun(x);
+}
+```
 
 
 
