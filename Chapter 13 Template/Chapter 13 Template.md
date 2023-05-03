@@ -185,5 +185,174 @@ int main()
 }
 ```
 
+### 类模板与成员函数模板
 
+- 使用template关键字引入模板：`template<typename T> class B{...};`
+  - 类模板的声明与定义——翻译单元的一处定义原则
+  - 成员函数只有在调用时才会被实例化
+  - 类内类模板名称的简写（`B{}==B<int>{}`）
+  - 类模板成员函数的定义（类内、类外）
 
+```c++
+#include <iostream>
+template <typename T>
+class B
+{
+public:
+    void fun(T input)
+    {
+        std::cout << input << std::endl;
+    }
+};
+int main()
+{
+    B<int> x;
+}
+```
+
+- 成员函数模板
+
+  - 类的成员函数模板
+
+  ```c++
+  #include <iostream>
+  
+  class B
+  {
+  public:
+      template <typename T>
+      void fun(T input)
+      {
+          std::cout << input << std::endl;
+      }
+  };
+  
+  B x;
+  x.fun<int>();
+  ```
+
+  - 类模板的成员函数模板
+
+  ```c++
+  #include <iostream>
+  template <typename T>
+  class B
+  {
+  public:
+      template <typename T1>
+      void fun()
+      {
+      }
+  };
+  B<int> x;
+  x.fun<int>(); 
+  ```
+
+  ```c++
+  #include <iostream>
+  template <typename T>
+  class B
+  {
+  public:
+      template <typename T1>
+      void fun();  // 在类外定义
+  };
+  
+  template <typename T>
+  template <typename T1>
+  void B<T>::fun()
+  {
+      
+  }
+  
+  B<int> x;
+  x.fun<int>(); 
+  ```
+
+- 友元函数（模板）
+
+  - 可以声明一个函数模板为某个类（模板）的友元
+  - C++11支持声明模板参数为友元
+
+```c++
+#include <iostream>
+template <typename T>
+class B
+{
+    friend auto operator + (B input1,B input2)
+    {
+        B res;
+        res.x = input1.x + input2.x;
+        return res;
+    }
+};
+
+int main()
+{
+    B<int> val1;
+    B<int> val2;
+    B<int> res = val1 + val2;
+}
+```
+
+- 类模板的实例化
+  - 与函数实例化很像
+  - 可以实例化整个类，或者类中的某个成员函数
+- 类模板的（完全）特化 / 部分特化（偏特化）
+  - 特化版本与基础版本可以拥有完全不同大的实现
+
+```c++
+#include <iostream>
+template <typename T>
+class B
+{
+    void fun()
+    {
+        std::cout<< "1\n";
+    }
+};
+template <>  // 类模板的特化
+struct B<int>
+{
+    void fun2()  // 名称可以不同
+    {
+        std::cout<<"2\n";
+    }
+};
+int main()
+{
+    B<int> x;
+    x.fun2();
+}
+```
+
+```c++
+#include <iostream>
+template <typename T, template T1>
+class B
+{
+    void fun()
+    {
+        std::cout<< "1\n";
+    }
+};
+template <typename T1>  // 类模板的部分特化
+struct B<int, T1>
+{
+    void fun2()  // 名称可以不同
+    {
+        std::cout<<"2\n";
+    }
+};
+int main()
+{
+    B<int,double> x;
+    x.fun2();
+}
+```
+
+- 类模板的实参推导（从C++17开始）
+  - 基于构造函数的实参推导
+  - 用户自定义的推导指引
+  - 注意：引入实参推导并不意味着降低了类型限制！
+  - C++17之前的解决方案：引入辅助模板函数
