@@ -1,7 +1,16 @@
 #include <iostream>
-#include <My_Matrix.h>
+#include "head.h"
+using namespace std;
 
-My_Matrix<int> mat1;
+
+
+int main()
+{
+    My_Matrix<int> mal1;
+    cout << mal1.x[0][0] ;
+    return 0;
+}
+
 
 
 

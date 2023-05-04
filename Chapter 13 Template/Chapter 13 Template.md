@@ -356,3 +356,112 @@ int main()
   - 用户自定义的推导指引
   - 注意：引入实参推导并不意味着降低了类型限制！
   - C++17之前的解决方案：引入辅助模板函数
+
+### Concepts
+
+- 模板的问题：没有对模板参数引入相应的限制
+
+  - 参数是否可以正常工作，通常需要阅读代码进行理解
+  - 编译报错友好性较差（vector<int&>）
+
+- （C++20）concepts：编译期谓词，基于给定的输入，返回true或false
+
+  ```c++
+  #include <type_traits>
+  template <typename T>
+  concept IsAvail = std::is_same_v<T, int> || std::is_same_v<T, float>
+  int main()
+  {
+      return IsAvail<int>;
+  }
+  ```
+
+  - 与constraints（require从句）一起使用限制模板参数
+
+  ```c++
+  #include <type_traits>
+  template <typename T>
+  concept IsAvail = std::is_same_v<T, int> || std::is_same_v<T, float>
+  
+  // 写法1
+  template <typename T>
+  	requires IsAvail<T> // 要求编译期返回真的时候才能调用
+  // 写法2
+  // template <IsAvail T>
+  	
+  void fun(T input)
+  {
+  }
+  
+  int main()
+  {
+      fun(true);
+  }
+  ```
+
+  - 通常置于表示模板形参尖括号后面进行限制
+
+- concept的定义与使用
+
+  - 包含一个模板参数的concept
+    - 使用requires从句
+    - 直接替换typename
+  - 包含多个模板参数的concept
+    - 用做类型constraint时，少传递一个参数，推导出的类型将作为首个参数
+
+- requires表达式
+
+  - 简单表达式：表明可以接收的操作
+
+  ```c++
+  template <typename T>
+  concept Addable =
+  requires (T a, T b){
+      a + b;
+  };
+  template <Addable T>
+  auto fun(T x, T y)
+  {
+      return x + y;
+  }
+  
+  struct Str{};
+  
+  int main()
+  {
+      Str a;
+      Str b;
+      fun(a, b);
+  }
+  ```
+
+  - 类型表达式：表明是一个有效的类型（通过cppreference.com查看）
+  - 符合表达式：表明操作的有效性，以及操作返回类型的特性
+  - 嵌套表达式：包含其它的限定表达式
+
+- 注意区分requires从句与requires表达式
+
+- requires从句会影响重载解析与特化版本的选取
+
+  - 只有requires从句有效而且返回为true时相应的模板才会被考虑
+  - requires从句所引入的限定具有偏序特性，系统会选择限制最严格的版本
+
+- 特化小技巧：在声明中引入“A||B”进行限制，之后分别对A和B引入特化
+
+```c++
+template <typename T>
+	requires std::is_same_v<T, int> || std::is_same_v<T, float>
+class B;
+
+template <>
+class B<int>{};
+
+template <>
+class B<float>{};
+
+int main()
+{
+    B<double> x;  // 报错：不符合requires
+}
+```
+
