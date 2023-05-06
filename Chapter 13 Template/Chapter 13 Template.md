@@ -465,3 +465,67 @@ int main()
 }
 ```
 
+### 模板相关类容——数值模板参数与模板模板参数
+
+- 模板可以接收（编译期常量）数值作为模板参数
+  - `template <int a> class Str`
+  - `template <typename T, T value>class Str`
+  - （C++17）`template <auto value> class Str`
+  - （C++20）接收字面值类对象与浮点数作为模板参数
+    - 目前clang12不支持接收浮点数作为模板参数
+- 接收模板作为模板参数
+  - `template <template<typename T>class C>class Str`
+  - （C++17）`template <template<typename T>typename C>class Str`
+  - C++17开始，模板的模板实参考虑缺省模板实参（clang12支持程度有限）
+    - `Str<vector>`是否支持？
+
+### 模板相关类容——别名模板与变长模板
+
+- 可以使用using引入别名模板
+  - 为模板本身引入别名
+  - 为类模板的成员引入别名
+  - 别名模板不支持特化，但可以基于类模板的特化引入别名，以实现类似特化的功能
+    - 注意与实参推导的关系
+- 变长模板（variabic template）
+  - 变长模板参数与参数包
+    - `<typename int... a>` 形参包 
+  - 变长模板参数可以是数值、类型或模板
+  - sizeof...操作
+  - 变长模板参数通常作为最后一个模板参数，但特化时例外
+
+### 模板相关类容——包展开与折叠表达式
+
+- （C++11）通过包展开技术操作变长模板参数
+  - 包展开语句可以很复杂，需要明确是哪一部分展开，在哪里展开
+- （C++17）折叠表达式（cpp reference）
+  - 基于逗号的折叠表达式
+  - 折叠表达式用于表达式求值，无法处理输入（输出）是类型与模板的情况
+
+### 模板相关类容——完美转发与lambda表达式模板
+
+- （C++11）完美转发：std::forward 函数
+  - 通常与万能引用结合使用
+  - 同时处理传入参数是左值或右值的情况
+- （C++20）lambda表达式模板
+
+### 模板相关类容——消除歧义与变量模板
+
+- 使用typename与template消除歧义
+  - 使用typename表示一个依赖名称是类型而非静态数据成员
+  - 使用template表示一个依赖名称是模板
+  - template与成员函数模板调用
+- （C++14）变量模板
+  - `template<typename T> T pi=(T)3.1415926;`
+  - 其它形式的变量模板
+
+```c++
+template <typename T>
+T pi = (T)3.14159;
+
+int main()
+{
+	std::cout<< pi<float> <<std::endl;
+    std::cout<< pi<int> <<std::endl;
+}
+```
+

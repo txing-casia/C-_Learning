@@ -1,5 +1,6 @@
 #include <iostream>
-const int N = 200;
+#include <vector>
+#include <span>
 template <typename T>
 class My_Matrix
 {
@@ -9,28 +10,65 @@ class My_Matrix
     //     res.x = A.x + B.x;
     //     return res;
     // }
-    T x;
-    int leng = 1;
-    int wid = 1;
-};
 
-template <>
-struct My_Matrix<int>
-{
-    My_Matrix(int input = 1)
+public: // private:
+    T x;
+    std::vector<T> data;
+    int i;
+    int j;
+    // 无参数初始化
+    My_Matrix():x(0), i(1), j(1), data(1, x){}
+    // 输入矩阵尺寸初始化
+    My_Matrix(int m, int n): x(0), i(m), j(n) ,data(m * n, x){}
+
+    // std::span<T> operator[](int row)
+    // {
+    //     const auto beginIt = data.begin() + row * j;
+    //     return std::span(beginIt, j);
+    // }
+
+
+    typename std::vector<T>::iterator operator [](std::size_t idx)
     {
-        for(int i=0;i<leng;i++){
-            for(int j=0;j<wid;j++){
-                x[i][j] = input;
-            }
+        /*
+        ref: [][]访问功能参考助教老师的代码示例
+        */
+        if(idx > (i - 1)){
+            throw std::range_error("My_Matrix::operator[], access invalid row!");
         }
+        return data.begin() + (idx * j);
     }
 
-    int leng = 1;
-    int wid = 1;
-    int x[N][N];
+    T at(std::size_t idx)
+    {
+        if(idx > j * i - 1){
+            throw std::range_error("My_Matrix::operator[], access invalid row!");
+        }
+        return data[idx];  // data[idx] ;
+    }
+
+
+    My_Matrix& My_Matrix::operator=(const My_Matrix &c)
+    {//具备自我赋值安全性和备异常安全性
+        A *temp=p;
+        p=new A(*c.p);
+        delete temp;
+        return *this;
+    }
 
 };
+
+// template <>
+// struct My_Matrix<int>
+// {
+
+//     std::span<int> operator [](int row)
+//     {
+//         const auto beginIt = data.begin() + row * j;
+//         return std::span(beginIt, j)
+//     }
+
+// };
 
 
 // template
