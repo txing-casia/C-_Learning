@@ -107,7 +107,7 @@ int main()
         // print_a_matrix(mat3 * mat4);
         cout << endl;
 
-        cout << "13. 将 mat4 reshape 之后执行mat3 * mat4：" << endl;
+        cout << "13. 将 mat4 reshape 正确之后，执行mat3 * mat4：" << endl;
         mat4.reshape(3,2);
         print_a_matrix(mat3 * mat4);
         cout << endl;
