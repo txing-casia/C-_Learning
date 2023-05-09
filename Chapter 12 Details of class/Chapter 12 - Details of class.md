@@ -53,10 +53,23 @@ Str& opterator = (const Str& input)
 }
 ```
 
-
-
 - operator[] 通常返回引用
 - 自增、自减运算符的前缀、后缀重载方法
+
+```c++
+Str& operator ++ () // 前缀自加（++x）
+{
+    ++val;
+    return *this;
+}
+Str& operator ++ (int) // 后缀自加（x++）
+{
+    Str tem(*this);
+    ++val;
+    return tem;
+}
+```
+
 - 使用解引用运算符（*）与成员访问运算符（->）模拟指针行为
   - 注意“.”运算符不能重载
   - “->”返回指针时会递归调用“->”操作

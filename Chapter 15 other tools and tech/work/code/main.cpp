@@ -112,6 +112,11 @@ int main()
         print_a_matrix(mat3 * mat4);
         cout << endl;
 
+        My_Matrix mat5 = move(mat4);
+        cout << "14. 支持移动构造 My_Matrix mat5 = move(mat4);" << endl;
+        // print_a_matrix(mat5);
+        cout << endl;
+
 
     }
     catch(...)

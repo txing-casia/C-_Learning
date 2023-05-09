@@ -55,6 +55,16 @@ public: // private:
         if (list.size() == 0)
         *this = My_Matrix();
     }
+    // 移动构造函数
+    My_Matrix(My_Matrix&& A)
+     :
+        data(std::move(A.data)),
+        i(std::move(A.i)),
+        j(std::move(A.j)),
+        length(std::move(A.length)),
+        x(std::move(A.x))
+    {
+    }
 
     typename std::vector<T>::iterator operator [](const std::size_t idx)
     {
